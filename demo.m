@@ -1,4 +1,4 @@
-% Demo code of SOIGO-PCA-CRC on the AR database.
+% Demo code of SOIGO-CCRC on the AR database.
 % Only the neutral image per subject in Session 1 is used as training samples
 % and three occluded images by sunglasses per subject in Session 2 are used as
 % test samples. The code can reproduce the results in Table 1 in our
@@ -12,8 +12,8 @@ load('AR_42_30')
 rows = 42;
 cols = 30;
 
-% when using the first order IGO (IGO-PCA-CRC), set order = 1
-% when using the second order IGO (SOIGO-PCA-CRC), set order = 2
+% when using the first order IGO (IGO-CCRC), set order = 1
+% when using the second order IGO (SOIGO-CCRC), set order = 2
 order = 1;
 
 % arrange the training data and its corresponding label vector
@@ -70,7 +70,7 @@ end
 train_PCA_features = Pro_Matrix'*Z;
 test_PCA_features = Pro_Matrix'*Z_tt;
 
-% employ CRC to classify the test data
+% employ CCRC to classify the test data
 correct_PCA = zeros(1, size(test_PCA_features, 1));
 lambda = 1e-3; % balance parameter for CRC
 for ii = 1:size(test_PCA_features, 1)
@@ -93,7 +93,7 @@ for ii = 1:size(test_PCA_features, 1)
     % pre-compute P
     P = (X'*X+tr_sym_mat+1e-1*eye(length(train_labels)))\X';
     
-    % CRC
+    % CCRC
     correct_PCA(ii) = computaccuracy(train_norm,train_labels',...
         test_norm,test_labels',P);
 end
